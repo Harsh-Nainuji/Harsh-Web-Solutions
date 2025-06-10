@@ -47,13 +47,13 @@ const projects = [
 const ProjectSection = () => {
   const [activeProject, setActiveProject] = useState(null);
   const [showVideo, setShowVideo] = useState(false);
+  const [videoLoading, setVideoLoading] = useState(true);
 
   return (
     <section
       id="projects"
       className="relative min-h-screen px-6 pt-24 pb-16 overflow-x-hidden bg-gradient-to-b from-black via-violet-900 to-black lg:px-24"
     >
-      {/* Header */}
       <div className="z-10 max-w-6xl mx-auto text-white">
         <motion.h2
           initial={{ opacity: 0, y: -40 }}
@@ -67,7 +67,6 @@ const ProjectSection = () => {
           Explore my highlighted full-stack projects with live demos and GitHub links.
         </p>
 
-        {/* Project Grid */}
         <div className="grid gap-10 sm:grid-cols-2">
           {projects.map((project, index) => (
             <motion.div
@@ -88,6 +87,7 @@ const ProjectSection = () => {
                   onClick={() => {
                     setActiveProject(project);
                     setShowVideo(false);
+                    setVideoLoading(true);
                   }}
                   className="p-5 transition-all duration-700 shadow-lg bg-white/10 backdrop-blur-xl rounded-2xl hover:shadow-purple-500/40"
                 >
@@ -131,8 +131,7 @@ const ProjectSection = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <div className="relative w-full max-w-5xl p-6 overflow-y-auto text-white bg-white/10 backdrop-blur-2xl rounded-3xl shadow-2xl max-h-[90vh]">
-              {/* Close Button */}
+            <div className="relative w-full max-w-6xl p-6 overflow-y-auto text-white bg-white/10 backdrop-blur-2xl rounded-3xl shadow-2xl max-h-[95vh]">
               <button
                 onClick={() => setActiveProject(null)}
                 className="absolute text-white top-4 right-4 hover:text-red-400"
@@ -140,22 +139,31 @@ const ProjectSection = () => {
                 <X size={28} />
               </button>
 
-              {/* Content */}
               <div className="flex flex-col gap-6 lg:flex-row">
-                <div className="w-full lg:w-1/2">
+                <div className="w-full lg:w-1/2 h-[300px] sm:h-[400px] lg:h-[500px] relative">
                   {!showVideo ? (
                     <img
                       src={activeProject.image}
                       alt={activeProject.title}
-                      className="object-contain w-full max-h-[70vh] rounded-xl border border-white/10"
+                      className="object-cover w-full h-full border rounded-xl border-white/10"
                     />
                   ) : (
-                    <video
-                      src={activeProject.video}
-                      controls
-                      autoPlay
-                      className="object-contain w-full max-h-[70vh] rounded-xl border border-white/10"
-                    />
+                    <>
+                      {videoLoading && (
+                        <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/60 rounded-xl">
+                          <p className="text-sm text-white animate-pulse">Loading video...</p>
+                        </div>
+                      )}
+                      <video
+                        src={activeProject.video}
+                        controls
+                        autoPlay
+                        muted
+                        preload="metadata"
+                        onLoadedData={() => setVideoLoading(false)}
+                        className="object-cover w-full h-full border rounded-xl border-white/10"
+                      />
+                    </>
                   )}
                 </div>
 
@@ -170,7 +178,10 @@ const ProjectSection = () => {
                   {!showVideo && (
                     <motion.button
                       whileTap={{ scale: 0.95 }}
-                      onClick={() => setShowVideo(true)}
+                      onClick={() => {
+                        setShowVideo(true);
+                        setVideoLoading(true);
+                      }}
                       className="px-6 py-2 mt-4 font-semibold text-black transition-all duration-300 bg-white rounded-xl hover:bg-purple-300"
                     >
                       ▶ Watch Demo
