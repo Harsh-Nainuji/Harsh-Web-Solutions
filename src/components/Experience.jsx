@@ -35,7 +35,7 @@ const experiences = [
 ];
 
 const cardVariants = {
-  initial: { opacity: 0, y: 50 },
+  initial: { opacity: 0, y: 40 },
   animate: { opacity: 1, y: 0 },
 };
 
@@ -43,23 +43,25 @@ const Experience = () => {
   return (
     <section
       id="experience"
-      className="relative px-6 py-32 overflow-hidden bg-gradient-to-b from-black to-violet-900 lg:px-24"
+      className="relative w-full px-6 overflow-hidden py-28 bg-gradient-to-b from-black via-violet-950 to-black lg:px-24"
     >
+      {/* Section Heading */}
       <div className="relative z-10 mb-16 text-center">
         <motion.h2
           initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="text-4xl font-bold text-white md:text-5xl"
+          className="text-4xl font-bold tracking-tight text-white md:text-5xl"
         >
           My Experience
         </motion.h2>
-        <p className="mt-4 text-lg text-purple-200">
+        <p className="mt-4 text-lg text-purple-300">
           From learning to launching full-scale apps — here's my journey.
         </p>
       </div>
 
-      <div className="relative z-10 grid max-w-5xl grid-cols-1 gap-10 mx-auto md:grid-cols-2">
+      {/* Timeline Grid */}
+      <div className="relative z-10 grid max-w-6xl grid-cols-1 gap-10 mx-auto md:grid-cols-2">
         {experiences.map((exp, index) => (
           <motion.div
             key={index}
@@ -68,18 +70,18 @@ const Experience = () => {
             whileInView="animate"
             viewport={{ once: true }}
             transition={{ delay: index * 0.15, duration: 0.6, ease: "easeOut" }}
-            className="relative p-6 overflow-hidden transition-all duration-500 border shadow-md group border-white/20 bg-white/10 rounded-2xl backdrop-blur-xl hover:shadow-purple-400/40"
+            className="relative p-6 overflow-hidden transition-all duration-500 border shadow-md group rounded-2xl border-white/20 bg-white/5 backdrop-blur-md hover:shadow-purple-500/30"
           >
-            <div className="absolute w-32 h-32 transition duration-700 bg-purple-400 rounded-full -top-10 -right-10 blur-3xl opacity-20 group-hover:opacity-40"></div>
-            <div className="flex items-center gap-3 mb-4">
+            <div className="absolute w-32 h-32 transition-opacity bg-purple-400 rounded-full -top-10 -right-10 opacity-20 blur-3xl group-hover:opacity-40" />
+            <div className="flex items-center gap-3 mb-3">
               {exp.icon}
-              <h3 className="text-xl font-semibold text-white">
-                {exp.title}
-              </h3>
+              <h3 className="text-xl font-semibold text-white">{exp.title}</h3>
             </div>
-            {exp.company && <p className="mb-1 text-purple-300">{exp.company}</p>}
+            {exp.company && (
+              <p className="mb-1 text-sm font-medium text-purple-300">{exp.company}</p>
+            )}
             <p className="text-sm text-purple-200">{exp.date}</p>
-            <p className="mt-3 text-base leading-relaxed text-purple-100">
+            <p className="mt-3 text-sm leading-relaxed text-purple-100">
               {exp.description}
             </p>
           </motion.div>

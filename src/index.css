@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-
+/* Font Setup */
 .geist {
   font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
   font-optical-sizing: auto;
@@ -10,44 +10,65 @@
   font-style: normal;
 }
 
-/* Global body styles */
+/* Global Body Reset */
 body {
-  font-family: 'Times New Roman', serif;
+  font-family: 'Geist', sans-serif;
   overflow-x: hidden;
   margin: 0;
   padding: 0;
   width: 100%;
   min-height: 100vh;
-  background-color: black;
-  color: white;
+  background-color: #000;
+  color: #fff;
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Optional: Improve focus and buttons */
+/* Enhance button & link transitions */
 button,
 a {
-  transition: all 0.3s ease;
+  transition: all 0.3s ease-in-out;
+  outline: none;
 }
 
+/* Scrollbar Styling */
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(128, 90, 213, 0.6); /* violet-500 */
+  background: rgba(139, 92, 246, 0.5); /* violet-500 */
   border-radius: 10px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 
-/* Prevent iOS bounce zoom issues */
+/* iOS Bounce Fix */
 html {
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth;
 }
 
-/* Optional utility if you want a .blur-bg reusable class */
+/* Utility class */
 .blur-bg {
   @apply backdrop-blur-md bg-black/30;
+}
+
+/* Smooth image appearance */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Heading spacing fix */
+h1, h2, h3, h4, h5 {
+  scroll-margin-top: 100px; /* Helps with anchor links under header */
+}
+
+/* Prevent tap highlight on mobile */
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }

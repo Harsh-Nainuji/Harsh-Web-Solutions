@@ -50,10 +50,10 @@ const ProjectSection = () => {
 
   return (
     <section
-  id="projects"
-  className="relative min-h-screen px-6 pt-24 pb-16 overflow-x-hidden bg-gradient-to-b from-black via-violet-900 to-black lg:px-24"
->
-
+      id="projects"
+      className="relative min-h-screen px-6 pt-24 pb-16 overflow-x-hidden bg-gradient-to-b from-black via-violet-900 to-black lg:px-24"
+    >
+      {/* Header */}
       <div className="z-10 max-w-6xl mx-auto text-white">
         <motion.h2
           initial={{ opacity: 0, y: -40 }}
@@ -67,36 +67,36 @@ const ProjectSection = () => {
           Explore my highlighted full-stack projects with live demos and GitHub links.
         </p>
 
+        {/* Project Grid */}
         <div className="grid gap-10 sm:grid-cols-2">
           {projects.map((project, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.2 }}
             >
               <Tilt
                 glareEnable={true}
-                glareMaxOpacity={0.2}
-                tiltMaxAngleX={10}
-                tiltMaxAngleY={10}
+                glareMaxOpacity={0.15}
+                tiltMaxAngleX={8}
+                tiltMaxAngleY={8}
                 scale={1.02}
-                transitionSpeed={500}
-                className="cursor-pointer transition-transform duration-700 ease-in-out hover:scale-[1.03]"
+                className="cursor-pointer"
               >
                 <div
                   onClick={() => {
                     setActiveProject(project);
                     setShowVideo(false);
                   }}
-                  className="p-5 text-white transition-all duration-700 shadow-xl bg-white/10 backdrop-blur-xl rounded-2xl hover:shadow-purple-500/40"
+                  className="p-5 transition-all duration-700 shadow-lg bg-white/10 backdrop-blur-xl rounded-2xl hover:shadow-purple-500/40"
                 >
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="object-cover w-full h-48 rounded-xl"
+                    className="object-cover w-full h-48 border rounded-xl border-white/10"
                   />
-                  <h3 className="mt-4 text-xl font-semibold text-center">
+                  <h3 className="mt-4 text-xl font-semibold text-center text-white">
                     {project.title}
                   </h3>
                   <p className="mt-2 text-sm text-center text-purple-100">
@@ -126,12 +126,13 @@ const ProjectSection = () => {
       <AnimatePresence>
         {activeProject && (
           <motion.div
-            className="fixed inset-0 z-[999] flex items-center justify-center backdrop-blur-md bg-black/90 px-4 overflow-y-auto"
+            className="fixed inset-0 z-[999] flex items-center justify-center bg-black/90 backdrop-blur px-4 py-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <div className="relative w-full max-w-5xl p-8 shadow-2xl bg-white/10 backdrop-blur-2xl rounded-3xl text-white max-h-[90vh] overflow-y-auto">
+            <div className="relative w-full max-w-5xl p-6 overflow-y-auto text-white bg-white/10 backdrop-blur-2xl rounded-3xl shadow-2xl max-h-[90vh]">
+              {/* Close Button */}
               <button
                 onClick={() => setActiveProject(null)}
                 className="absolute text-white top-4 right-4 hover:text-red-400"
@@ -139,35 +140,41 @@ const ProjectSection = () => {
                 <X size={28} />
               </button>
 
-              <div className="flex flex-col items-center justify-between gap-6 lg:flex-row">
-                {!showVideo ? (
-                  <img
-                    src={activeProject.image}
-                    alt={activeProject.title}
-                    className="rounded-xl w-full lg:w-1/2 object-contain max-h-[75vh]"
-                  />
-                ) : (
-                  <video
-                    src={activeProject.video}
-                    controls
-                    autoPlay
-                    className="rounded-xl w-full lg:w-1/2 object-contain max-h-[75vh]"
-                  />
-                )}
+              {/* Content */}
+              <div className="flex flex-col gap-6 lg:flex-row">
+                <div className="w-full lg:w-1/2">
+                  {!showVideo ? (
+                    <img
+                      src={activeProject.image}
+                      alt={activeProject.title}
+                      className="object-contain w-full max-h-[70vh] rounded-xl border border-white/10"
+                    />
+                  ) : (
+                    <video
+                      src={activeProject.video}
+                      controls
+                      autoPlay
+                      className="object-contain w-full max-h-[70vh] rounded-xl border border-white/10"
+                    />
+                  )}
+                </div>
 
                 <div className="flex flex-col w-full gap-4 lg:w-1/2">
                   <h3 className="text-3xl font-bold text-purple-200">
                     {activeProject.title}
                   </h3>
-                  <p className="text-purple-100">{activeProject.description}</p>
+                  <p className="leading-relaxed text-purple-100">
+                    {activeProject.description}
+                  </p>
 
                   {!showVideo && (
-                    <button
+                    <motion.button
+                      whileTap={{ scale: 0.95 }}
                       onClick={() => setShowVideo(true)}
-                      className="px-6 py-2 mt-4 font-semibold text-black transition-all bg-white rounded-xl hover:bg-violet-300"
+                      className="px-6 py-2 mt-4 font-semibold text-black transition-all duration-300 bg-white rounded-xl hover:bg-purple-300"
                     >
                       ▶ Watch Demo
-                    </button>
+                    </motion.button>
                   )}
                 </div>
               </div>

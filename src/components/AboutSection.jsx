@@ -7,23 +7,28 @@ const AboutSection = () => {
 
   const handleMouseMove = (e) => {
     const card = cardRef.current;
-    const rect = card.getBoundingClientRect();
+    if (!card) return;
 
+    const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    const rotateX = ((y - centerY) / centerY) * -10;
-    const rotateY = ((x - centerX) / centerX) * 10;
+    const rotateX = ((y - centerY) / centerY) * -6;
+    const rotateY = ((x - centerX) / centerX) * 6;
 
     card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
   };
 
   const handleMouseLeave = () => {
     const card = cardRef.current;
-    card.style.transform = `rotateX(0deg) rotateY(0deg)`;
+    if (!card) return;
+
+    card.style.transition = "transform 0.3s ease-out";
+    card.style.transform = "rotateX(0deg) rotateY(0deg)";
+    setTimeout(() => (card.style.transition = ""), 300); // Reset transition
   };
 
   return (
@@ -47,7 +52,7 @@ const AboutSection = () => {
           <div className="shine-overlay" />
           <h2 className="about-heading">About Me</h2>
           <p className="about-text">
-            I'm a full-stack developer who loves solving problems with clean code and thoughtful design.
+            I’m a full-stack developer who loves solving problems with clean code and thoughtful design.
             <br /><br />
             From idea to deployment, I help businesses bring their vision to life — whether it's a sleek portfolio, a data-driven dashboard, or an e-commerce site.
             <br /><br />
